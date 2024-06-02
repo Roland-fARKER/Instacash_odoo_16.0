@@ -1,0 +1,135 @@
+<odoo>
+  <data>
+    <!-- Vista de lista para los empeños -->
+    <record model="ir.ui.view" id="view_empeno_list">
+      <field name="name">empeno.list</field>
+      <field name="model">empeno.empeno</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="cliente_id"/>
+          <field name="articulo"/>
+          <field name="descripcion"/>
+          <field name="monto_prestamo"/>
+          <field name="interes_mensual"/>
+          <field name="fecha_empeno"/>
+          <field name="estado"/>
+        </tree>
+      </field>
+    </record>
+
+    <!-- Vista de formulario para los empeños -->
+    <record model="ir.ui.view" id="view_empeno_form">
+      <field name="name">empeno.form</field>
+      <field name="model">empeno.empeno</field>
+      <field name="arch" type="xml">
+        <form>
+          <sheet>
+            <group>
+              <field name="cliente_id"/>
+              <field name="articulo"/>
+              <field name="descripcion"/>
+              <field name="monto_prestamo"/>
+              <field name="interes_mensual"/>
+              <field name="fecha_empeno"/>
+              <field name="estado"/>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <!-- Vista Kanban para los empeños -->
+    <record model="ir.ui.view" id="view_empeno_kanban">
+      <field name="name">empeno.kanban</field>
+      <field name="model">empeno.empeno</field>
+      <field name="arch" type="xml">
+        <kanban>
+          <field name="cliente_id"/>
+          <field name="articulo"/>
+          <field name="descripcion"/>
+          <field name="monto_prestamo"/>
+          <field name="interes_mensual"/>
+          <field name="fecha_empeno"/>
+          <field name="estado"/>
+          <templates>
+            <t t-name="kanban-box">
+              <div class="oe_kanban_global_click">
+                <div class="oe_kanban_details">
+                  <strong><field name="cliente_id"/></strong>
+                  <div><field name="articulo"/></div>
+                  <div><field name="descripcion"/></div>
+                  <div>Préstamo: <field name="monto_prestamo"/></div>
+                  <div>Interés: <field name="interes_mensual"/>%</div>
+                  <div>Fecha: <field name="fecha_empeno"/></div>
+                  <div>Estado: <field name="estado"/></div>
+                </div>
+              </div>
+            </t>
+          </templates>
+        </kanban>
+      </field>
+    </record>
+
+    <!-- Vista de lista para los abonos -->
+    <record model="ir.ui.view" id="view_abono_list">
+      <field name="name">abono.list</field>
+      <field name="model">empeno.abono</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="empeno_id"/>
+          <field name="monto_abono"/>
+          <field name="fecha_abono"/>
+          <field name="tipo_abono"/>
+        </tree>
+      </field>
+    </record>
+
+    <!-- Vista de formulario para los abonos -->
+    <record model="ir.ui.view" id="view_abono_form">
+      <field name="name">abono.form</field>
+      <field name="model">empeno.abono</field>
+      <field name="arch" type="xml">
+        <form>
+          <sheet>
+            <group>
+              <field name="empeno_id"/>
+              <field name="monto_abono"/>
+              <field name="fecha_abono"/>
+              <field name="tipo_abono"/>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <!-- Acción para los empeños -->
+    <record model="ir.actions.act_window" id="action_empeno">
+      <field name="name">Empeños</field>
+      <field name="res_model">empeno.empeno</field>
+      <field name="view_mode">tree,form,kanban</field>
+      <field name="view_id" ref="view_empeno_list"/>
+      <field name="view_ids" eval="[(5, 0, 0),
+                                      (0, 0, {'view_mode': 'tree', 'view_id': ref('view_empeno_list')}),
+                                      (0, 0, {'view_mode': 'form', 'view_id': ref('view_empeno_form')}),
+                                      (0, 0, {'view_mode': 'kanban', 'view_id': ref('view_empeno_kanban')})]"/>
+    </record>
+
+    <!-- Acción para los abonos -->
+    <record model="ir.actions.act_window" id="action_abono">
+      <field name="name">Abonos</field>
+      <field name="res_model">empeno.abono</field>
+      <field name="view_mode">tree,form</field>
+      <field name="view_id" ref="view_abono_list"/>
+      <field name="view_ids" eval="[(5, 0, 0),
+                                      (0, 0, {'view_mode': 'tree', 'view_id': ref('view_abono_list')}),
+                                      (0, 0, {'view_mode': 'form', 'view_id': ref('view_abono_form')})]"/>
+    </record>
+
+    <!-- Menú superior -->
+    <menuitem name="Empenos" id="menu_empeno_root"/>
+
+    <!-- Categorías del menú -->
+    <menuitem name="Empeños" id="menu_empeno" parent="menu_empeno_root" action="action_empeno"/>
+    <menuitem name="Abonos" id="menu_abono" parent="menu_empeno_root" action="action_abono"/>
+  </data>
+</odoo>

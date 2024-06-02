@@ -1,0 +1,93 @@
+<odoo>
+  <data>
+    <!-- Vista de lista explícita -->
+    <record model="ir.ui.view" id="pic.cliente_list_view">
+      <field name="name">pic.cliente.list</field>
+      <field name="model">pic.cliente</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="nombre"/>
+          <field name="identification"/>
+          <field name="phone"/>
+          <field name="email"/>
+          <field name="direccion"/>
+        </tree>
+      </field>
+    </record>
+
+    <!-- Vista Kanban -->
+    <record model="ir.ui.view" id="pic.cliente_kanban_view">
+      <field name="name">pic.cliente.kanban</field>
+      <field name="model">pic.cliente</field>
+      <field name="arch" type="xml">
+        <kanban>
+          <field name="nombre"/>
+          <field name="identification"/>
+          <field name="phone"/>
+          <field name="email"/>
+          <field name="direccion"/>
+          <templates>
+            <t t-name="kanban-box">
+              <div class="oe_kanban_global_click">
+                <div class="oe_kanban_details">
+                  <strong><field name="nombre"/></strong>
+                  <div style='display:flex; gap:15px;'>
+                    <div>
+                      <div><i class="fa fa-address-card"></i> <field name="identification"/></div>
+                      <div><i class="fa fa-phone"></i> <field name="phone"/></div>
+                    </div>
+                    <div>
+                      <div><i class="fa fa-envelope"></i> <field name="email"/></div>
+                      <div><i class="fa fa-map-marker-alt"></i> <field name="direccion"/></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </t>
+          </templates>
+        </kanban>
+      </field>
+    </record>
+
+    <!-- Vista de formulario -->
+    <record model="ir.ui.view" id="pic.cliente_form_view">
+      <field name="name">pic.cliente.form</field>
+      <field name="model">pic.cliente</field>
+      <field name="arch" type="xml">
+        <form>
+          <sheet>
+            <group>
+              <field name="nombre"/>
+              <field name="identification"/>
+              <field name="phone"/>
+              <field name="email"/>
+              <field name="direccion"/>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <!-- Acción abriendo vistas sobre modelos -->
+    <record model="ir.actions.act_window" id="pic.cliente_action_window">
+      <field name="name">Perfil integral de clientes</field>
+      <field name="res_model">pic.cliente</field>
+      <field name="view_mode">tree,form,kanban</field>
+      <field name="view_id" ref="pic.cliente_list_view"/>
+      <field name="view_ids" eval="[(5, 0, 0), 
+                                      (0, 0, {'view_mode': 'tree', 'view_id': ref('pic.cliente_list_view')}),
+                                      (0, 0, {'view_mode': 'form', 'view_id': ref('pic.cliente_form_view')}),
+                                      (0, 0, {'view_mode': 'kanban', 'view_id': ref('pic.cliente_kanban_view')})]"/>
+    </record>
+
+    <!-- Menú superior -->
+    <menuitem name="PIC" id="pic.menu_root"/>
+
+    <!-- Categorías del menú -->
+    <menuitem name="Cliente" id="pic.cliente_menu_1" parent="pic.menu_root"/>
+
+    <!-- Acciones del menú -->
+    <menuitem name="Cliente" id="pic.cliente_menu_1_list" parent="pic.cliente_menu_1"
+              action="pic.cliente_action_window"/>
+  </data>
+</odoo>
