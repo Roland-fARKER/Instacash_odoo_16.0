@@ -1,0 +1,10 @@
+<!-- views/web_templates.xml -->
+<odoo>
+    <template id="custom_assets_backend" inherit_id="web.assets_backend" name="Custom Web Title">
+        <xpath expr="." position="inside">
+            <script type="text/javascript">
+                document.title = 'Instacash - Odoo';
+            </script>
+        </xpath>
+    </template>
+</odoo>

@@ -1,2 +1,2 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_pic_cliente,pic.cliente,model_pic_cliente,base.group_user,1,1,1,1
+access_pic_cliente_user,pic.cliente.user,model_pic_cliente,base.group_user,1,1,1,1
